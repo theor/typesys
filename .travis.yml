@@ -88,16 +88,16 @@ before_install:
   - rustup self update
 
 install:
-  - sh ci/install.sh
+  # - sh ci/install.sh
   - source ~/.cargo/env || true
 
 script:
-  - bash ci/script.sh
+  # - bash ci/script.sh
 
 after_script: set +e
 
 before_deploy:
-  - sh ci/before_deploy.sh
+  # - sh ci/before_deploy.sh
 
 deploy:
   # TODO update `api_key.secure`
@@ -105,7 +105,7 @@ deploy:
   # - Encrypt it: `travis encrypt 0123456789012345678901234567890123456789
   # - Paste the output down here
   api_key:
-    secure: A9v3PIzQQ4U08OHFmDPQzNXbNHEb7YHyLXCvMF+dXFuNSvhUNlmQYykxqUf3dvikhJL2/bsZ14umm7ni7fQh0tGwJ4+lPpNzYAcweGgNXnWvjTpY6ovuRbr3gs4/srkyxp/GBDmSW5L8wFN3hKCB+Lm0YnIPB9IA2afP8a30+8VTXT9nv7pNqGny4ilN41ycr4DZi3sQoXdbruy7ClN7gsWW/GUiudBccHVIjmTapOFKLwZHODaUl/1/RDWQzh+i+17e1ivXuJPktDSrqmHPTZ15OjklnHKd6t179ry6VkGRg4R/R/YukVIqGzeaXGWAwdAQ5gE8cjGZghJLVi2jkDBJ85z8MvT+zLZLyliiuhLc/X8y7mkE1n0FKFtXXzFVt0l7V1LaEKbIbiV6XX3jsir4qgkqWjPHBZqO5mkGNFS16Dmt30/ZtEPAzXiINFXbWuWrpQ/LZ4NSto8IMrRTcoyDbAga/KYxJiNIeVuCe1E9dbytDM7K0GLtxJTul/WnnSeI6r//EFyC4bxYjyHhCXaag4q14KM+ak4rB0QgxsYzyGuh2MqyCoVj8YJLjLdKnL/SV7W7LPD40xlxvI6VCYTVi2ILHwL6vCxpukXYteX0c5IAIWkISDKu6nNBEgmCHXXPSqYSrgE5g7/QoCQHI8++nR8iKe0s7TWxZRydby8=
+     secure: "jxooH3JF9ZbkHQ2DZ9vizUqDx1fgU2SxCaWA8bMb6+T+n3kR0jkPF2iooIGet0pXJ6M+OqlHeDxYSz5aGYgWwAmVpfTIQ09m2juWY/QdRuGh9HNf0pFlXDltvkAdt3LToLxJeieP/Qk/sW/QkYwfl6R2hL3pkQ7AHxR8SeYjacAES81rJ0Tm8NTD1K1kQOiJeZ5dXampmIl953Zg4BVc4pTpSonnuWsQ7Xdz5IudUefcTeK3upJMWM5C+kgJ5SnU1eLPNowzS6X8XSHYFMGFjA5aCiW4K7eWr/K/au/7pQQZailvHaqsyP1SOL8zj+qA+NN3qmFX2GPPZ/qn/7EVvN+NLuxqJ/dsishkTaVJZQ20FDPLf0vZ10W59X/mhb3ljw2dmEf8UEF9sqeKmf4btl2shy7PRxaphbljEQvzd3RkpQyHzCxSxJDUXzWK48g4HETuM0yNQ0RgfP9KJapsmU5fncaXlv0CguwHXBxTwUFfSSbxWpIP2PSBlhNtbC5kpiBLfejQIhxXg+RAF4d3HjUIdl2a8dKYBXzlVY++br8Zl69omaBcMGxyto/g/la5IpXeOR83B8gNFacaPlOP4XgA2pUnYp4hnpz/YokbQFnoIKAFEM1zx3TG/4iasP9dV7rj+uC27lbs48JAy6orHj2yt7CifutwtMTXGsG7RIw="
   file_glob: true
   file: $CRATE_NAME-$TRAVIS_TAG-$TARGET.*
   on:
