@@ -5,13 +5,25 @@ use std::str;
 use std::str::FromStr;
 pub use nom::IResult;
 use nom::{digit, is_alphabetic};
+use ::nom_locate::LocatedSpan;
 
+pub type Span<'a> = LocatedSpan<&'a str>;
 pub type ParseResult<I> = IResult<I, Ast, Error>;
 
-named!(pub ptype<&str>,
-    map_res!(
-        ws!(take_while!(is_alphabetic)),
-        str::from_utf8
+// named!(pub ptype<Span, Span>,
+//     map_res!(
+//         ws!(take_while!(is_alphabetic)),
+//         str::from_utf8
+//     )
+// );
+
+named!(pub ptype<Span, Span>,
+    recognize!(
+        do_parse!(
+            one_of!("_abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ") >>
+            many0!(one_of!("_abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789")) >>
+            ()
+        )
     )
 );
 

@@ -5,3 +5,4 @@ authors = ["theor <theo.richart@gmail.com>"]
 
 [dependencies]
 nom = "*"
+nom_locate = "*"

@@ -26,8 +26,8 @@ pub fn check(t:&Ast) -> TypeCheckResult {
     match t {
         &Ast::Prim(ref p) => 
             match p {
-                &AstPrimitive::Number(_) => Ok(::types::Type::Prim(::types::Primitive::Number).into()),
-                &AstPrimitive::String(_) => Ok(::types::Type::Prim(::types::Primitive::Number).into()),
+                &AstPrimitive::Number(_) => Ok(tnum().into()),
+                &AstPrimitive::String(_) => Ok(tstr().into()),
             },
         &Ast::Fun => Ok(Rc::new(::types::Type::Fun(Rc::new(tnum()), Rc::new(tstr())))),
         // &Ast:: App(ref , ref b) => ::types::Type::Prim(::types::Primitive::Number),

@@ -1,5 +1,6 @@
 #[macro_use]
 extern crate nom;
+extern crate nom_locate;
 
 pub mod errors;
 pub mod ast;
@@ -15,7 +16,10 @@ mod tests {
     }
     #[test]
     fn parse2() {
-        assert_eq!(::parser::ptype(b"qwe"), ::parser::IResult::Done(&b""[..], "qwe"));
+        use parser::Span;
+        let input = Span::new("qwe");
+        println!("{:?}", ::parser::ptype(input));
+        // assert_eq!(::parser::ptype(b"qwe"),  ::parser::IResult::Done(&b""[..], "qwe"));
     }
     #[test]
     fn it_works() {
@@ -33,7 +37,10 @@ mod tests {
             use super::ast::*;
             App(ra(Fun), ra(Prim(Number(2))))
         };
+        use super::types::*;
+        use super::types::Primitive::*;
+        use super::types::Type::*;
         println!("{:?}", t);
-        println!("{:?}",check(&a));
+        assert_eq!(rt(Fun(rt(Prim(Number)), rt(Prim(Number)))),check(&a).unwrap());
     }
 }
