@@ -8,4 +8,3 @@ nom_locate = "*"
 
 [dependencies.nom]
 version = "*"
-features = ["nightly"]
