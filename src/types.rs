@@ -1,5 +1,5 @@
 use std::rc::Rc;
-use ast::{Ast, Primitive as AstPrimitive, tnum, tstr};
+use ast::{Ast, Expr, Primitive as AstPrimitive, tnum, tstr};
 use errors::Error;
 
 #[derive(Debug, Clone, PartialEq, Eq)]
@@ -24,7 +24,7 @@ pub fn check(t:&Ast) -> TypeCheckResult {
     // Ok(::types::Type::Prim(::types::Primitive::Number).into())
 
     match t {
-        &Ast::Prim(ref p) => 
+        &Ast::Expr(Expr::Prim(ref p)) => 
             match p {
                 &AstPrimitive::Number(_) => Ok(tnum().into()),
                 &AstPrimitive::String(_) => Ok(tstr().into()),
@@ -38,6 +38,6 @@ pub fn check(t:&Ast) -> TypeCheckResult {
                 _ => Err(Error::Typecheck),
             }
         },
-        // _ => Err(Error::Typecheck),
+        _ => Err(Error::Typecheck),
     }
 }

@@ -93,4 +93,4 @@ impl Identifier {
     }
 }
 
-type TypeIdentifier = Identifier;
+pub type TypeIdentifier = Identifier;

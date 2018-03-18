@@ -4,5 +4,8 @@ version = "0.1.0"
 authors = ["theor <theo.richart@gmail.com>"]
 
 [dependencies]
-nom = "*"
 nom_locate = "*"
+
+[dependencies.nom]
+version = "*"
+features = ["nightly"]

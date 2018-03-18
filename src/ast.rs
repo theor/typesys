@@ -9,9 +9,21 @@ pub enum Primitive {
 
 #[derive(Debug, Eq, PartialEq)]
 pub enum Ast {
-    Prim(Primitive),
+    Expr(Expr),
     Fun,
     App(RAst, RAst)
+}
+
+#[derive(Debug, Eq, PartialEq)]
+pub enum BinOp {
+    Add,
+    Sub,
+}
+
+#[derive(Debug, Eq, PartialEq)]
+pub enum Expr {
+    Prim(Primitive),
+    BinOp(BinOp, RAst, RAst),
 }
 
 pub type RAst = Rc<Ast>;
