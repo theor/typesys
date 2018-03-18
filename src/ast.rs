@@ -18,6 +18,8 @@ pub enum Ast {
 pub enum BinOp {
     Add,
     Sub,
+    Mul,
+    Div,
 }
 
 #[derive(Debug, Eq, PartialEq)]

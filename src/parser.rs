@@ -48,12 +48,30 @@ named!(pub binop<NomSpan, BinOp>,
 );
 // We parse any expr surrounded by parens, ignoring all whitespaces around those
 named!(pub parens<NomSpan, Ast>, ws!(delimited!( tag!("("), expr, tag!(")") )) );
-named!(pub expr<NomSpan, Ast>,
+named!(pub term<NomSpan, Ast>,
     do_parse!(
         init: factor >>
         // p: prim >> (Ast::Expr(Expr::Prim(p)))
         res: fold_many0!(
-            pair!(binop, factor),
+            pair!(
+                alt!(
+                    tag!("*")   => {|_| BinOp::Mul } |
+                    tag!("/") => {|_| BinOp::Div }
+                ), factor),
+                init,
+                |acc, (op, val): (BinOp, Ast)| {
+                    // val
+                    Ast::Expr(Expr::BinOp(op, Rc::new(acc), Rc::new(val)))
+                }
+        ) >> (res)
+    )
+);
+named!(pub expr<NomSpan, Ast>,
+    do_parse!(
+        init: term >>
+        // p: prim >> (Ast::Expr(Expr::Prim(p)))
+        res: fold_many0!(
+            pair!(binop, term),
                 init,
                 |acc, (op, val): (BinOp, Ast)| {
                     // val
