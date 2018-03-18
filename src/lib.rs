@@ -38,6 +38,12 @@ mod tests {
         // assert_eq!(::parser::type_id(b"qwe"),  ::parser::IResult::Done(&b""[..], "qwe"));
     }
     #[test]
+    fn parse_full_expr() {
+        let input = NomSpan::new("(1+2)*3+4");
+        println!("{:?}", ::parser::expr(input));
+        // assert_eq!(::parser::type_id(b"qwe"),  ::parser::IResult::Done(&b""[..], "qwe"));
+    }
+    #[test]
     fn parse_arrow() {
         use parser::Span;
         let input = NomSpan::new("a->b");
