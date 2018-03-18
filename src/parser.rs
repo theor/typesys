@@ -6,8 +6,9 @@ use std::str::FromStr;
 pub use nom::IResult;
 use nom::{digit, is_alphabetic};
 use ::nom_locate::LocatedSpan;
+pub use span::*;
 
-pub type Span<'a> = LocatedSpan<&'a str>;
+
 pub type ParseResult<I> = IResult<I, Ast, Error>;
 
 // named!(pub ptype<Span, Span>,
@@ -16,8 +17,25 @@ pub type ParseResult<I> = IResult<I, Ast, Error>;
 //         str::from_utf8
 //     )
 // );
+// #[derive(Debug)]
+// pub struct Type(Span);
+#[derive(Debug)]
+pub struct Arrow {
+    a: Identifier,
+    b: Identifier,
+    loc: Span,
+}
 
-named!(pub ptype<Span, Span>,
+use ast::*;
+
+named!(pub prim<NomSpan, Ast>,
+    do_parse!(
+        x: many1!(one_of!("0123456789")) >>
+        (Ast::Prim(Primitive::Number(x.into_iter().collect::<String>().parse().unwrap())))
+    )
+);
+
+named!(pub ltype<NomSpan, NomSpan>,
     recognize!(
         do_parse!(
             one_of!("_abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ") >>
@@ -25,6 +43,23 @@ named!(pub ptype<Span, Span>,
             ()
         )
     )
+);
+named!(pub ptype<NomSpan, Identifier>,
+    do_parse! (
+        t: ltype >>
+        (Identifier::from_nom_span(t))
+    )
+);
+
+named!(pub arrow<NomSpan, Arrow>,
+    // recognize!(
+        do_parse!(
+            a: ptype >>
+            tag!("->") >>
+            b: ptype >>
+            (Arrow { loc: Span::from_to(a.span, b.span), a,b})
+        )
+    // )
 );
 
 // We parse any expr surrounded by parens, ignoring all whitespaces around those

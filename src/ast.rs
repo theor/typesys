@@ -1,15 +1,21 @@
 use std::rc::Rc;
 
+
+#[derive(Debug, Eq, PartialEq)]
 pub enum Primitive {
     Number(i32),
     String(i32),
 }
+
+#[derive(Debug, Eq, PartialEq)]
 pub enum Ast {
     Prim(Primitive),
     Fun,
     App(RAst, RAst)
 }
+
 pub type RAst = Rc<Ast>;
+
 pub fn ra(t:Ast) -> RAst {
     Rc::new(t)
 }
